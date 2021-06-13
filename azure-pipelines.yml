@@ -1,0 +1,87 @@
+parameters:
+  - name: Run_Stage
+    displayName: Stage to Run
+    type: string
+    default: 'CI'
+    values:
+      - CI
+      - Project1
+      - Project2
+
+  - name: location
+    displayName: Location
+    type: string
+    default: 'UK South'
+    values:
+    - 'UK South'
+    - 'UK West'
+
+  - name: env
+    displayName: Environment
+    type: string
+    default: 'SANDBOX'
+    values:
+    - SANDBOX
+    - DEV
+    - TEST
+    - UAT
+    - PROD
+
+name: Infrastructure Deployment Pipeline - ${{ parameters.env }} ${{ parameters.Run_Stage }}
+trigger:
+  - master
+
+variables:
+  - name: tfversion
+    value: 0.13.4
+  - name: project
+    value: application
+  - name: serviceConnection
+stages:
+  
+  - stage: Project1
+    displayName: 'Project1'
+    pool: $(agentPool)
+    condition: or(contains('${{ parameters.Run_Stage }}', 'Project1'), contains('${{ parameters.Run_Stage }}', 'CI'))
+    jobs:
+      - job: Project1
+        steps:
+          - template: pipeline-steps/deploy-service.yaml
+            parameters:
+              environment: ${{ parameters.env }}
+              location: ${{ parameters.location }}
+              stack: 01-Project1
+              project: $(project)
+              tfversion: $(tfversion)
+              serviceConnection: $(serviceConnection)
+              gaServiceConnection:  $(gaServiceConnection)
+              activity_name: Project1
+              run_stage: ${{ parameters.Run_Stage }}
+  - stage: Project2
+    displayName: 'Project2'
+    pool: $(agentPool)
+    condition: or(contains('${{ parameters.Run_Stage }}', 'Project2'), contains('${{ parameters.Run_Stage }}', 'CI'))
+    jobs:
+      - job: Project2
+        steps:
+          - template: pipeline-steps/deploy-service.yaml
+            parameters:
+              environment: ${{ parameters.env }}
+              location: ${{ parameters.location }}
+              stack: 02-Project2
+              project: $(project)
+              tfversion: $(tfversion)
+              serviceConnection: $(serviceConnection)
+              gaServiceConnection:  $(gaServiceConnection)
+              activity_name: Project1
+              run_stage: ${{ parameters.Run_Stage }}
+              postPlanScript:
+              - file: file1.txt
+                parameters:
+                - name: param1
+                  value: Para1_value
+              - file: file2.txt
+                parameters:
+                - name: param2
+                  value: Para2_value
+     
