@@ -30,8 +30,8 @@ steps:
       inputs:
         targetType: 'inline'
         script: 'echo ${{ inputScript.file  }}'
-      parameters:
-      - ${{each parameter in inputScript.parameters}}:
-      - ${{ parameter.name  }}: ${{ parameter.value  }}
+      # parameters:
+      # - ${{each parameter in inputScript.parameters}}:
+      # - ${{ parameter.name  }}: ${{ parameter.value  }}
 
   
