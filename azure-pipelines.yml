@@ -59,7 +59,8 @@ stages:
               activity_name: Project1
               run_stage: ${{ parameters.Run_Stage }}
   - stage: Project2
-    displayName: 'Project2'
+    displayName: 'Project1'
+    dependsOn: DeployBuild
     pool:
       vmImage: 'Ubuntu-16.04'
     condition: or(contains('${{ parameters.Run_Stage }}', 'Project2'), contains('${{ parameters.Run_Stage }}', 'CI'))
