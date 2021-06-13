@@ -41,7 +41,8 @@ stages:
   
   - stage: Project1
     displayName: 'Project1'
-    pool: $(agentPool)
+    pool: 
+      vmImage: 'Ubuntu-16.04'
     condition: or(contains('${{ parameters.Run_Stage }}', 'Project1'), contains('${{ parameters.Run_Stage }}', 'CI'))
     jobs:
       - job: Project1
@@ -59,7 +60,8 @@ stages:
               run_stage: ${{ parameters.Run_Stage }}
   - stage: Project2
     displayName: 'Project2'
-    pool: $(agentPool)
+    pool:
+      vmImage: 'Ubuntu-16.04'
     condition: or(contains('${{ parameters.Run_Stage }}', 'Project2'), contains('${{ parameters.Run_Stage }}', 'CI'))
     jobs:
       - job: Project2
