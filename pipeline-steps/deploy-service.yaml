@@ -16,11 +16,6 @@ parameters:
 
 steps:
 
-  - template: keyvault-read.yaml
-    parameters:
-      serviceConnection: $(serviceConnection)
-      environment: ${{ parameters.environment }}
-
 # lowercase $env variable comes from the above template
 
   - task: Bash@3
