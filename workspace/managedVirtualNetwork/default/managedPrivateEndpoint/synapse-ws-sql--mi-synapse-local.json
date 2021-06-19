@@ -1,0 +1,10 @@
+{
+	"name": "synapse-ws-sql--mi-synapse-local",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/2a24ae5f-0dab-46e6-8f9d-6a2018623814/resourceGroups/mi-local-rg/providers/Microsoft.Synapse/workspaces/mi-synapse-local",
+		"groupId": "sql",
+		"fqdns": [
+			"mi-synapse-local.44f6f1a9-c8e6-48fd-b5f9-06f5fa9d49ca.sql.azuresynapse.net"
+		]
+	}
+}
