@@ -1,0 +1,15 @@
+{
+	"name": "Storage",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://qzstorageaccountstg.blob.core.windows.net",
+			"accountKind": "StorageV2"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
