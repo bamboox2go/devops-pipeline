@@ -29,7 +29,7 @@ parameters:
 
 name: Infrastructure Deployment Pipeline - ${{ parameters.env }} ${{ parameters.Run_Stage }}
 trigger:
-  - master
+  - workspace_publish
 
 variables:
   - name: tfversion
@@ -47,6 +47,11 @@ stages:
     jobs:
       - job: Project1
         steps:
+
+          - task: CmdLine@2
+            displayName: 'show filders'
+            inputs:
+              script: 'git merge origin/main'
           - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
             displayName: 'Synpase deployment task for workspace: mi-synapse-local'
             inputs:
@@ -67,34 +72,3 @@ stages:
               gaServiceConnection:  $(gaServiceConnection)
               activity_name: Project1
               run_stage: ${{ parameters.Run_Stage }}
-  - stage: Project2
-    displayName: 'Project2'
-    dependsOn: Project1
-    pool:
-      vmImage: 'Ubuntu-16.04'
-    condition: or(contains('${{ parameters.Run_Stage }}', 'Project2'), contains('${{ parameters.Run_Stage }}', 'CI'))
-    jobs:
-      - job: Project2
-        steps:
-          - template: pipeline-steps/deploy-service.yaml
-            parameters:
-              environment: ${{ parameters.env }}
-              location: ${{ parameters.location }}
-              stack: 02-Project2
-              project: $(project)
-              tfversion: $(tfversion)
-              serviceConnection: $(serviceConnection)
-              gaServiceConnection:  $(gaServiceConnection)
-              activity_name: Project1
-              run_stage: ${{ parameters.Run_Stage }}
-              postPlanScript:
-              - file: file1.txt
-                parameters:
-                - name: param1
-                  value: Para1_value
-              - file: file2.txt
-                parameters:
-                - name: param2
-                  value: Para2_value
-
-           
