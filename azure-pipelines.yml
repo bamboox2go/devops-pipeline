@@ -53,7 +53,7 @@ stages:
               TemplateFile: '$(System.DefaultWorkingDirectory)/mi-synapse-local/TemplateForWorkspace.json'
               ParametersFile: '$(System.DefaultWorkingDirectory)/mi-synapse-local/TemplateParametersForWorkspace.json'
               azureSubscription: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
-              ResourceGroupName: 'mi-synapse-local'
+              ResourceGroupName: 'mi-local-rg'
               TargetWorkspaceName: 'mi-synapse-local'
             
           - template: pipeline-steps/deploy-service.yaml
