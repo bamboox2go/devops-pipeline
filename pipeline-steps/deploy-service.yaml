@@ -1,0 +1,37 @@
+parameters:
+  environment: ''
+  location: ''
+  stack: ''
+  project: ''
+  tfversion: ''
+  activity_name: ''
+  serviceConnection: ''
+  gaServiceConnection: ''
+  run_stage: ''
+  databaseName: ''
+  serverName: ''
+  resourceGroupName: ''
+  synapseWorkspaceName: ''
+  postPlanScript: []
+
+steps:
+
+# lowercase $env variable comes from the above template
+
+  - task: Bash@3
+    displayName: 'Subscription Replacement'
+    inputs:
+      targetType: 'inline'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/scritps/'
+      script: |
+            ls -lrt
+  - ${{each inputScript in parameters.postPlanScript}}:
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'echo ${{ inputScript.file  }}'
+      # parameters:
+      # - ${{each parameter in inputScript.parameters}}:
+      # - ${{ parameter.name  }}: ${{ parameter.value  }}
+
+  

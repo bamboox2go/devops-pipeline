@@ -1,0 +1,74 @@
+parameters:
+  - name: Run_Stage
+    displayName: Stage to Run
+    type: string
+    default: 'CI'
+    values:
+      - CI
+      - Project1
+      - Project2
+
+  - name: location
+    displayName: Location
+    type: string
+    default: 'UK South'
+    values:
+    - 'UK South'
+    - 'UK West'
+
+  - name: env
+    displayName: Environment
+    type: string
+    default: 'SANDBOX'
+    values:
+    - SANDBOX
+    - DEV
+    - TEST
+    - UAT
+    - PROD
+
+name: Infrastructure Deployment Pipeline - ${{ parameters.env }} ${{ parameters.Run_Stage }}
+trigger:
+  - workspace_publish
+
+variables:
+  - name: tfversion
+    value: 0.13.4
+  - name: project
+    value: application
+  - name: serviceConnection
+stages:
+  
+  - stage: Project1
+    displayName: 'Project1'
+    pool: 
+      vmImage: 'Ubuntu-latest'
+    condition: or(contains('${{ parameters.Run_Stage }}', 'Project1'), contains('${{ parameters.Run_Stage }}', 'CI'))
+    jobs:
+      - job: Project1
+        steps:
+
+          - task: CmdLine@2
+            displayName: 'show filders'
+            inputs:
+              script: 'git pull  origin main --allow-unrelated-histories --no-edit'
+          - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
+            displayName: 'Synpase deployment task for workspace: mi-synapse-local'
+            inputs:
+              TemplateFile: '$(System.DefaultWorkingDirectory)/mi-synapse-local/TemplateForWorkspace.json'
+              ParametersFile: '$(System.DefaultWorkingDirectory)/mi-synapse-local/TemplateParametersForWorkspace.json'
+              azureSubscription: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
+              ResourceGroupName: 'mi-local-rg'
+              TargetWorkspaceName: 'mi-synapse-local'
+            
+          - template: pipeline-steps/deploy-service.yaml
+            parameters:
+              environment: ${{ parameters.env }}
+              location: ${{ parameters.location }}
+              stack: 01-Project1
+              project: $(project)
+              tfversion: $(tfversion)
+              serviceConnection: $(serviceConnection)
+              gaServiceConnection:  $(gaServiceConnection)
+              activity_name: Project1
+              run_stage: ${{ parameters.Run_Stage }}
