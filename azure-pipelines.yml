@@ -51,7 +51,10 @@ stages:
           - task: CmdLine@2
             displayName: 'show filders'
             inputs:
-              script: 'git rebase origin/main'
+              script: |
+                git config  user.email "azuredevops@hmcts.net"
+                git config  user.name "Azure devops"            
+                git rebase origin/main
           - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
             displayName: 'Synpase deployment task for workspace: mi-synapse-local'
             inputs:
