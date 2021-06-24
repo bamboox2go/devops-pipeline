@@ -1,0 +1,17 @@
+pytest
+pytest-runner
+pytest-html
+pytest-xdist
+pyodbc
+azure-mgmt-datafactory
+#pytest-adf
+python-dotenv
+flake8
+coverage
+msrestazure
+azure-identity
+azure-mgmt-resource
+pyodbc
+azure-storage-blob
+requests
+pyjwt
