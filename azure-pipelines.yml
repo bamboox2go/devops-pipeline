@@ -63,15 +63,12 @@ stages:
               azureSubscription: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
               ResourceGroupName: 'mi-local-rg'
               TargetWorkspaceName: 'mi-synapse-local'
-            
-          - template: pipeline-steps/deploy-service.yaml
+          - template: pipeline-steps/integration-tests-job.yaml
             parameters:
-              environment: ${{ parameters.env }}
-              location: ${{ parameters.location }}
-              stack: 01-Project1
-              project: $(project)
-              tfversion: $(tfversion)
-              serviceConnection: $(serviceConnection)
-              gaServiceConnection:  $(gaServiceConnection)
-              activity_name: Project1
-              run_stage: ${{ parameters.Run_Stage }}
+              subscriptionEndpoint: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
+              adfName: mi-synapse-local
+              
+              envMapping:
+                - key: BUILD_VERSION
+                  value: Build.BuildId
+
