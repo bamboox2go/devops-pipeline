@@ -1,0 +1,10 @@
+{
+	"name": "MPE_blob",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/2a24ae5f-0dab-46e6-8f9d-6a2018623814/resourceGroups/bamboox-adf/providers/Microsoft.Storage/storageAccounts/qzstorageaccountstg",
+		"groupId": "blob",
+		"fqdns": [
+			"qzstorageaccountstg.blob.core.windows.net"
+		]
+	}
+}
