@@ -49,12 +49,13 @@ stages:
         steps:
 
           - task: CmdLine@2
-            displayName: 'show filders'
+            displayName: 'Git rebase master'
             inputs:
               script: |
                 git config  user.email "azuredevops@hmcts.net"
                 git config  user.name "Azure devops"            
                 git rebase origin/main
+                ls -lRt
           - task: AzureSynapseWorkspace.synapsecicd-deploy.synapse-deploy.Synapse workspace deployment@1
             displayName: 'Synpase deployment task for workspace: mi-synapse-local'
             inputs:
@@ -63,12 +64,12 @@ stages:
               azureSubscription: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
               ResourceGroupName: 'mi-local-rg'
               TargetWorkspaceName: 'mi-synapse-local'
-          - template: pipeline-steps/integration-tests-job.yaml
-            parameters:
-              subscriptionEndpoint: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
-              adfName: mi-synapse-local
-              
-              envMapping:
-                - key: BUILD_VERSION
-                  value: Build.BuildId
+      - template: pipeline-steps/integration-tests-job.yaml
+        parameters:
+          subscriptionEndpoint: 'bamboox-beta (2a24ae5f-0dab-46e6-8f9d-6a2018623814)'
+          adfName: mi-synapse-local
+          
+          envMapping:
+            - key: BUILD_VERSION
+              value: Build.BuildId
 
