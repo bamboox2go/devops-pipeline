@@ -8,7 +8,6 @@ steps:
     displayName: 'Subscription Replacement'
     inputs:
       targetType: 'inline'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/scritps/'
       script: |
             ls -lrt
   # - ${{each inputScript in parameters.postPlanScript}}:
