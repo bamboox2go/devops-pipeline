@@ -1,18 +1,4 @@
-parameters:
-  environment: ''
-  location: ''
-  stack: ''
-  project: ''
-  tfversion: ''
-  activity_name: ''
-  serviceConnection: ''
-  gaServiceConnection: ''
-  run_stage: ''
-  databaseName: ''
-  serverName: ''
-  resourceGroupName: ''
-  synapseWorkspaceName: ''
-  postPlanScript: []
+
 
 steps:
 
